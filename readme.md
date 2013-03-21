@@ -15,6 +15,55 @@ git clone git://github.com/herumi/fmindex.git
 cd fmindex
 make -j
 
+
+A tiny benchmark
+-------------
+input.txt is 203MB UTF-8 text file.
+query.txt is 10KB UTF-8 text file.
+
+    % dir input.txt query.txt
+    -rw-r--r-- 1 shigeo shigeo 213829088 Mar 21 16:14 input.txt
+    % wc query.txt
+    1431   442 10389 query.txt
+    ; original fmindex
+    % time ./fmconstruct input.txt input.dat
+    start reading the input-file
+    alphabet size:219
+    build SA
+    calculate statistics
+    build BWT
+    build WaveletTree
+    build sampledSA
+    cpu time:61.690000
+    75.520u 1.712s 1:17.43 99.7%    0+0k 0+866456io 0pf+0w
+    % dir input.dat
+    -rw-r--r-- 1 shigeo shigeo 443623615 Mar 21 16:16 input.dat
+    % time ./fmsearch input.dat query.txt >a.txt
+    exact search mode:
+    cpu time: 160.560000
+    160.750u 0.704s 2:42.03 99.6%   0+0k 0+448816io 0pf+0w
+
+    ; forked fmindex with cybozu/wavelet_matrix.hpp
+    % time ./construct input.txt input.dat
+    start reading the input-file
+    alphabet size:219
+    build SA
+    calculate statistics
+    build BWT
+    build WaveletTree
+    build sampledSA
+    cpu time:60.730000
+    74.536u 1.404s 1:16.13 99.7%    0+0k 0+923808io 0pf+0w
+    % dir input.dat
+    -rw-r--r-- 1 shigeo shigeo 472987963 Mar 21 16:16 input.dat
+    % time ./search input.dat ../query.txt >b.txt
+    exact search mode:
+    cpu time: 30.050000
+    29.869u 0.744s 0:30.72 99.6%    0+0k 0+448776io 0pf+0w
+
+    a.txt is equal to b.txt.
+
+
 License
 --------------------------------------------------------------------
 fmindex-plus-plus

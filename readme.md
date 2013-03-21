@@ -8,12 +8,13 @@ This includes sais.hxx by Yuta Mori
 
 Build
 -------------
-mkdir work
-cd work
-git clone git://github.com/herumi/cybozulib.git
-git clone git://github.com/herumi/fmindex.git
-cd fmindex
-make -j
+
+    mkdir work
+    cd work
+    git clone git://github.com/herumi/cybozulib.git
+    git clone git://github.com/herumi/fmindex.git
+    cd fmindex
+    make -j
 
 
 A tiny benchmark
@@ -21,7 +22,7 @@ A tiny benchmark
 input.txt is 203MB UTF-8 text file.
 query.txt is 10KB UTF-8 text file.
 
-    % dir input.txt query.txt
+    % dir input.txt
     -rw-r--r-- 1 shigeo shigeo 213829088 Mar 21 16:14 input.txt
     % wc query.txt
     1431   442 10389 query.txt

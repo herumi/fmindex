@@ -46,6 +46,24 @@ query.txt is 10KB UTF-8 text file.
     cpu time: 160.560000
     160.750u 0.704s 2:42.03 99.6%   0+0k 0+448816io 0pf+0w
 
+    ; use wavelet-matrix-cpp
+    % time ./construct2 input.txt input.dat
+    start reading the input-file
+    alphabet size:219
+    build SA
+    calculate statistics
+    build BWT
+    build WaveletTree
+    build sampledSA
+    cpu time:64.540000
+    77.716u 1.824s 1:19.74 99.7%    0+0k 0+815496io 0pf+0w
+    % dir input.dat
+    -rw-r--r-- 1 shigeo shigeo 417532311 Mar 23 05:00 input.dat
+    % time ./search2 input.dat ../query.txt > b.txt
+    exact search mode:
+    cpu time: 71.930000
+    71.992u 0.720s 1:12.94 99.6%    0+0k 0+448768io 0pf+0w
+
     ; forked fmindex with cybozu/wavelet_matrix.hpp
     % time ./construct input.txt input.dat
     start reading the input-file
@@ -59,13 +77,12 @@ query.txt is 10KB UTF-8 text file.
     74.536u 1.404s 1:16.13 99.7%    0+0k 0+923808io 0pf+0w
     % dir input.dat
     -rw-r--r-- 1 shigeo shigeo 472987963 Mar 21 16:16 input.dat
-    % time ./search input.dat ../query.txt >b.txt
+    % time ./search input.dat ../query.txt >c.txt
     exact search mode:
     cpu time: 30.050000
     29.869u 0.744s 0:30.72 99.6%    0+0k 0+448776io 0pf+0w
 
-    a.txt is equal to b.txt.
-
+    a.txt, b.txt and c.txt are all same.
 
 License
 --------------------------------------------------------------------

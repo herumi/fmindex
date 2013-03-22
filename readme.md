@@ -12,7 +12,9 @@ Build
     mkdir work
     cd work
     git clone git://github.com/herumi/cybozulib.git
+    git clone git://github.com/herumi/opti.git
     git clone git://github.com/herumi/fmindex.git
+    (cd opti/comp && sh ./build-wavelet-sh)
     cd fmindex
     make -j
 

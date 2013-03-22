@@ -27,12 +27,52 @@
 #include <map>
 #include <vector>
 #include <fstream>
-#include <cybozu/bitvector.hpp>
-#include <cybozu/wavelet_matrix.hpp>
 #include "sais.hxx"
 #include <stdio.h>
 #include <limits.h>
 #include <time.h>
+#ifdef COMPARE_WAVELET
+#include "wavelet_matrix.hpp"
+struct WaveletMatrix {
+	wavelet_matrix::WaveletMatrix wm;
+	void init(const std::vector<uint8_t>& v8, int)
+	{
+		std::vector<uint64_t> v64;
+		v64.resize(v8.size());
+		for (size_t i = 0; i < v8.size(); i++) {
+			v64[i] = v8[i];
+		}
+		wm.Init(v64);
+	}
+	uint64_t get(uint64_t pos) const
+	{
+		return wm.Lookup(pos);
+	}
+	uint64_t rank(uint32_t val, uint64_t pos) const
+	{
+		return wm.Rank(val, pos);
+	}
+	uint64_t rankLt(uint32_t val, uint64_t pos) const
+	{
+		return wm.RankLessThan(val, pos);
+	}
+	uint64_t select(uint32_t val, uint64_t rank) const
+	{
+		return wm.Select(val, rank + 1) - 1;
+	}
+	size_t size() const { return wm.length(); }
+	size_t size(uint32_t val) const
+	{
+		return rank(val, wm.length());
+	}
+	void load(std::istream& is) { wm.Load(is); }
+	void save(std::ostream& os) const { wm.Save(os); }
+};
+#else
+#include <cybozu/bitvector.hpp>
+#include <cybozu/wavelet_matrix.hpp>
+typedef cybozu::WaveletMatrix WaveletMatrix;
+#endif
 
 namespace cybozu {
 
@@ -44,7 +84,7 @@ class FMindex {
 	std::map<uint8_t, unsigned char> rmapping;
 	std::vector<uint32_t> sampledSA;
 	std::vector<std::vector<int> > cols;
-	cybozu::WaveletMatrix wa;
+	WaveletMatrix wa;
 public:
 	FMindex()
 	{

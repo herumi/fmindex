@@ -30,7 +30,7 @@ clean:
 	$(RM) *.o $(TARGET)
 
 
-HEADER=include/cybozu/fmindex.hpp
+HEADER=include/cybozu/fmindex.hpp ../cybozulib/include/cybozu/wavelet_matrix.hpp ../cybozulib/include/cybozu/sucvector.hpp
 search.o: search.cpp $(HEADER)
 construct.o: construct.cpp $(HEADER)
 

@@ -201,7 +201,8 @@ public:
 		size_t t = 0;
 
 		while (j % divSeq != 0) {
-			j = cf[wa.get(j)] + wa.rank(wa.get(j), j + 1) - 1;
+			size_t c = wa.get(j);
+			j = cf[c] + wa.rank(c, j + 1) - 1;
 			t++;
 		}
 

@@ -23,7 +23,7 @@
 #include <cstring>
 #include <ctime>
 #include <cstdlib>
-#include <cybozu/fmindex.hpp>
+#include "include/cybozu/fmindex.hpp"
 
 
 using namespace std;
